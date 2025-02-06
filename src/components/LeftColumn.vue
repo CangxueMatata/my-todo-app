@@ -1,20 +1,27 @@
 <script>
-    import { ref } from 'vue';
 
-    const list = ref([1, 2, 3, 4])
 
     export default {
+        data(){
+            return {
+                icons: [
+                    { src: 'icon.png', alt: 'Icon 1'},
+                    { src: 'icon.png', alt: 'Icon 2'},
+                    { src: 'icon.png', alt: 'Icon 3'},
+                ],
+            };
+        },
         methods: {
         handleClick() {
             alert('Icon clicked!');
         },
         MouseOn(index) {
-            const icon = document.getElementById("icon" + index); 
+            const icon = document.getElementById(`icon${index}`); 
             icon.style.backgroundColor = '#FFFFFF';
         },    
         MouseOff(index) {
-            const icon1 = document.getElementById("icon" + index);
-            icon1.style.backgroundColor = '#F4F1ED';
+            const icon = document.getElementById(`icon${index}`);
+            icon.style.backgroundColor = '#F4F1ED';
         },
         },
     };
@@ -24,16 +31,16 @@
 <template>
     <div id = "app">
         <div class = "icon-container">    
-            <img v-for = "(item, index) in list"
+            <img v-for = "(icon, index) in icons"
             :key = "index"
-            :src = "../assets/icon.png">
+            :src = "icon.src"
             :alt = "icon.alt"
-            :id = "`icon - ${index + 1}`"
-            class = "icon"/>
-                
+            :id = "`icon${index}`"
+            :class = "[index === 0 ? 'icon1' : 'icon']"
+            @click = "handleClick()"
+            @mouseover = "MouseOn(index)"
+            @mouseleave = "MouseOff(index)" />  
         </div>
-            <img id = "icon1" src="../assets/icon.png" alt="Icon" class = "icon1" @click = "handleClick" @mouseover = "MouseOn(1)" @mouseleave = "MouseOff(1)"/>
-            <img id = "icon2" src="../assets/icon.png" alt="Icon" class="icon" @click = "handleClick"/>
   </div>
   </template>
   
